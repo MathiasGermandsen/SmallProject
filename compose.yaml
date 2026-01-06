@@ -1,0 +1,7 @@
+﻿services:
+  smallproject:
+    image: smallproject
+    build:
+      context: .
+      dockerfile: SmallProject/Dockerfile
+
