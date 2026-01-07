@@ -3,9 +3,6 @@
 services:
   smallproject:
     image: smallproject:latest
-    build:
-      context: .
-      dockerfile: SmallProject/Dockerfile
     ports:
       - "8080:8080"
       - "8081:8081"
@@ -15,8 +12,12 @@ services:
       ConnectionStrings__DefaultConnection: ${DATABASE_CONNECTION_STRING}
     networks:
       - smallproject-network
-    restart: unless-stopped
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
 
 networks:
   smallproject-network:
-    driver: bridge
+    driver: overlay
