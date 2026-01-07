@@ -35,7 +35,16 @@ public class CatFactController : ControllerBase
   {
     var catFact = await _context.CatFacts.FindAsync(fact);
     if (catFact == null)
-      return NotFound();
+    {
+      catFact = new CatFact
+      {
+        Fact = fact,
+        DateAdded = DateTime.UtcNow,
+        Likes = 0,
+        Dislikes = 0
+      };
+      _context.CatFacts.Add(catFact);
+    }
 
     catFact.Likes++;
     await _context.SaveChangesAsync();
@@ -48,7 +57,16 @@ public class CatFactController : ControllerBase
   {
     var catFact = await _context.CatFacts.FindAsync(fact);
     if (catFact == null)
-      return NotFound();
+    {
+      catFact = new CatFact
+      {
+        Fact = fact,
+        DateAdded = DateTime.UtcNow,
+        Likes = 0,
+        Dislikes = 0
+      };
+      _context.CatFacts.Add(catFact);
+    }
 
     catFact.Dislikes++;
     await _context.SaveChangesAsync();
