@@ -15,7 +15,7 @@ public class CatFactController : ControllerBase
     _context = context;
   }
 
-  [HttpPost("api/like/{fact}")]
+  [HttpPost("like/{fact}")]
   public async Task<IActionResult> Like(string fact)
   {
     var catFact = await _context.CatFacts.FindAsync(fact);
@@ -37,7 +37,7 @@ public class CatFactController : ControllerBase
     return Ok(new { fact = catFact.Fact, likes = catFact.Likes, dislikes = catFact.Dislikes });
   }
 
-  [HttpPost("api/dislike/{fact}")]
+  [HttpPost("dislike/{fact}")]
   public async Task<IActionResult> Dislike(string fact)
   {
     var catFact = await _context.CatFacts.FindAsync(fact);
