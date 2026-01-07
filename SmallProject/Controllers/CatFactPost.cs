@@ -18,14 +18,15 @@ public class CatFactController : ControllerBase
   [HttpPost("like/{fact}")]
   public async Task<IActionResult> Like(string fact)
   {
-    var catFact = await _context.CatFacts.FindAsync(fact);
+    CatFact catFact = await _context.CatFacts.FindAsync(fact);
+    
     if (catFact == null)
     {
       catFact = new CatFact
       {
         Fact = fact,
         DateAdded = DateTime.UtcNow,
-        Likes = 1,
+        Likes = 0,
         Dislikes = 0
       };
       _context.CatFacts.Add(catFact);
@@ -34,13 +35,13 @@ public class CatFactController : ControllerBase
     catFact.Likes++;
     await _context.SaveChangesAsync();
 
-    return Ok(new { fact = catFact.Fact, likes = catFact.Likes, dislikes = catFact.Dislikes });
+    return Ok(catFact);
   }
 
   [HttpPost("dislike/{fact}")]
   public async Task<IActionResult> Dislike(string fact)
   {
-    var catFact = await _context.CatFacts.FindAsync(fact);
+    CatFact catFact = await _context.CatFacts.FindAsync(fact);
     if (catFact == null)
     {
       catFact = new CatFact
@@ -48,15 +49,16 @@ public class CatFactController : ControllerBase
         Fact = fact,
         DateAdded = DateTime.UtcNow,
         Likes = 0,
-        Dislikes = 1
+        Dislikes = 0
       };
       _context.CatFacts.Add(catFact);
     }
 
     catFact.Dislikes++;
+    
     await _context.SaveChangesAsync();
 
-    return Ok(new { fact = catFact.Fact, likes = catFact.Likes, dislikes = catFact.Dislikes });
+    return Ok(catFact);
   }
 }
 
