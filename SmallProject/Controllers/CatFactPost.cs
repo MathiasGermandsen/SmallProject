@@ -15,21 +15,6 @@ public class CatFactController : ControllerBase
     _context = context;
   }
 
-  [HttpPost]
-  public async Task<IActionResult> Post([FromBody] CatFactRequest request)
-  {
-    var catFact = new CatFact
-    {
-      DateAdded = DateTime.UtcNow,
-      Fact = request.Fact
-    };
-
-    _context.CatFacts.Add(catFact);
-    await _context.SaveChangesAsync();
-
-    return Ok(new { fact = catFact.Fact, dateAdded = catFact.DateAdded, likes = catFact.Likes, dislikes = catFact.Dislikes });
-  }
-
   [HttpPost("api/like/{fact}")]
   public async Task<IActionResult> Like(string fact)
   {
@@ -40,7 +25,7 @@ public class CatFactController : ControllerBase
       {
         Fact = fact,
         DateAdded = DateTime.UtcNow,
-        Likes = 0,
+        Likes = 1,
         Dislikes = 0
       };
       _context.CatFacts.Add(catFact);
@@ -63,7 +48,7 @@ public class CatFactController : ControllerBase
         Fact = fact,
         DateAdded = DateTime.UtcNow,
         Likes = 0,
-        Dislikes = 0
+        Dislikes = 1
       };
       _context.CatFacts.Add(catFact);
     }
