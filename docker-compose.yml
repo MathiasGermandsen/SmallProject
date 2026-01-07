@@ -4,12 +4,12 @@ services:
   smallproject:
     image: smallproject:latest
     ports:
-      - "8080:8080"
-      - "8081:8081"
+      - "8080:9090"
+      - "8081:9091"
     environment:
       ASPNETCORE_ENVIRONMENT: Production
-      ASPNETCORE_URLS: http://+:9090;https://+9091
-      ConnectionStrings__DefaultConnection: ${DATABASE_CONNECTION_STRING}
+      ASPNETCORE_URLS: "http://+:9090"
+      ConnectionStrings__DefaultConnection: "${DATABASE_CONNECTION_STRING}"
     networks:
       - smallproject-network
     deploy:
